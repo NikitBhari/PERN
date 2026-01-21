@@ -1,0 +1,36 @@
+.settings-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.profile-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 20px;
+  width: 360px;
+}
+
+.profile-card p {
+  margin: 10px 0;
+}
+
+.logout-btn {
+  width: 100%;
+  margin-top: 25px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #ef4444;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}
