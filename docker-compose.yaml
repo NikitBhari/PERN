@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: authdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - pern-network
+
+  backend:
+    build: ./01_nodejs
+    container_name: pern_backend
+    ports:
+      - "8081:8081"
+    environment:
+      PORT: 8081
+      DB_USER: postgres
+      DB_PASSWORD: 123456
+      DATABASE: authdb
+      DBPORT: 5432
+      DB_HOST: host.docker.internal   # 🔥 connect to existing Postgres
+      JWT_SECRET: mysecretkey123
+      PIXABAY_KEY: 54250962-9626b86513571f35867cccb07
+      PEXELS_KEY: 6NWagCPzMtwN1el0JCW8SpptVp6NIWejizDUjgGKahbasoEH3B0o5RNq
+
+  frontend:
+    build: 
+      context: ./04_reactjs
+      args:
+        VITE_API_URL: http://localhost:8081
+    container_name: pern_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - pern-network
+
+networks:
+  pern-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    external: true
